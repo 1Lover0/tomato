@@ -3,7 +3,7 @@ import './FoodDisplay.css'
 import { StoreContext } from '../../context/StoreContext'
 import FoodItem from '../foodItem/FoodItem'
 
-export const FoodDisplay = () => {
+export const FoodDisplay = ({category}) => {
 
     const{food_list} = useContext(StoreContext)
 
@@ -13,7 +13,9 @@ export const FoodDisplay = () => {
       <div className="food-display-list">
         {
           food_list.map((item,index) => {
-            return <FoodItem key={index} id={item.id}  name={item.name} price={item.price} description={item.description} image={item.image} />
+            if(category=="All" || category===item.category){
+              return <FoodItem key={index} id={item.id}  name={item.name} price={item.price} description={item.description} image={item.image} />
+            }
           })
         }
       </div>
