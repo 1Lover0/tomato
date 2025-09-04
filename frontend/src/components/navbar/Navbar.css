@@ -97,4 +97,15 @@
     .navbar-menu{
         display: none;
     }
+    .navbar .logo{
+        width: 100px;
+    }
+    .navbar-right{
+        gap: 15px;
+    }
+    .navbar-right button{
+        font-size: 13px;
+        padding: 8px 15px;
+        border-radius: 50px;
+    }
 }
