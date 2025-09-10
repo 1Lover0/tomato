@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import {food_list} from "../assets/assets"
+import { food_list } from "../assets/assets"
 
 
 export const StoreContext = createContext();
@@ -11,29 +11,35 @@ export const StoreContextProvider = (props) => {
 
     const addToCart = (itemID) => {
         if (!cartItems[itemID]) {
-            setCartItems((prev) => ({...prev,[itemID]:1}))
+            setCartItems((prev) => ({ ...prev, [itemID]: 1 }))
         }
         else {
-            setCartItems((prev) => ({...prev,[itemID]:prev[itemID]+1}))
+            setCartItems((prev) => ({ ...prev, [itemID]: prev[itemID] + 1 }))
         }
     }
 
     const removeFromCart = (itemID) => {
-        setCartItems((prev) => ({...prev,[itemID]:prev[itemID]-1}))
+        setCartItems((prev) => ({ ...prev, [itemID]: prev[itemID] - 1 }))
     }
 
-    
-    useEffect(() => {
-        console.log(cartItems);
-        
-    },[cartItems])
 
-
-
-    const contextValue={
-        food_list, addToCart, removeFromCart, cartItems, setCartItems
+    const getTotalCartAmount = () => {
+        let totalAmount = 0;
+        for (const item in cartItems) {
+            if (cartItems[item] > 0) {
+                let itemInfo = food_list.find((product) => product.id === item);
+                totalAmount += itemInfo.price * cartItems[item]
+            }
+        }
+        return totalAmount;
     }
-    return(
+
+
+
+    const contextValue = {
+        food_list, addToCart, removeFromCart, cartItems, setCartItems, getTotalCartAmount
+    }
+    return (
         <StoreContext.Provider value={contextValue}>
             {props.children}
         </StoreContext.Provider>
